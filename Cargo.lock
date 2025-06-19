@@ -193,8 +193,7 @@ dependencies = [
 [[package]]
 name = "discord-presence"
 version = "1.6.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f91d7c2fc01ffdc327e2b66d65dd59b8bd3f31a17e88811ce0540412fa0b84c1"
+source = "git+https://github.com/jewlexx/discord-presence?branch=vencord-support#3ce9087a8e656501db8953529b421d5cbe32455e"
 dependencies = [
  "byteorder",
  "bytes",

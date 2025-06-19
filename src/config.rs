@@ -24,6 +24,8 @@ pub struct Format {
     #[serde(default = "default_state_format")]
     pub state: String,
     #[serde(default)]
+    pub name: String,
+    #[serde(default)]
     pub timestamp: TimestampMode,
     #[serde(default = "default_image")]
     pub large_image: String,
@@ -40,6 +42,7 @@ impl Default for Format {
         Self {
             details: default_details_format(),
             state: default_state_format(),
+            name: default_name_format(),
             timestamp: TimestampMode::default(),
             large_image: default_image(),
             small_image: default_image(),
@@ -90,6 +93,10 @@ fn default_details_format() -> String {
 
 fn default_state_format() -> String {
     "$artist / $album".to_string()
+}
+
+fn default_name_format() -> String {
+    "$artist".to_string()
 }
 
 fn default_image() -> String {

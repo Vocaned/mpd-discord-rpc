@@ -35,6 +35,7 @@ async fn main() {
     let tokens = Tokens {
         details: get_tokens(&re, &format.details),
         state: get_tokens(&re, &format.state),
+        name: get_tokens(&re, &format.name),
         large_text: get_tokens(&re, &format.large_text),
         small_text: get_tokens(&re, &format.small_text),
     };
@@ -103,6 +104,7 @@ async fn main() {
 struct Tokens {
     details: Vec<String>,
     state: Vec<String>,
+    name: Vec<String>,
     large_text: Vec<String>,
     small_text: Vec<String>,
 }
@@ -193,6 +195,10 @@ impl<'a> Service<'a> {
                     replace_tokens(&format.state, &self.tokens.state, &song, status),
                     MAX_BYTES,
                 );
+                let name = clamp(
+                    replace_tokens(&format.name, &self.tokens.name, &song, status),
+                    MAX_BYTES,
+                );
                 let large_text =
                     replace_tokens(&format.large_text, &self.tokens.large_text, &song, status);
                 let small_text =
@@ -206,6 +212,7 @@ impl<'a> Service<'a> {
                     act.state(state)
                         ._type(ActivityType::Listening)
                         .details(details)
+                        .name(name)
                         .assets(|mut assets| {
                             match url {
                                 Some(url) => assets = assets.large_image(url),
@@ -228,6 +235,7 @@ impl<'a> Service<'a> {
                             assets
                         })
                         .timestamps(|_| timestamps)
+                        .instance(true)
                 });
 
                 if let Err(why) = res {
